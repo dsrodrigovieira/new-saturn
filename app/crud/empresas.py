@@ -5,6 +5,9 @@ from app.schemas.empresas import EmpresaBase
 def read_one(db: Session, empresa: int):
     return db.query(Empresa).filter(Empresa.id == empresa).first()
 
+def read_by_cnpj_cnes(db: Session, cnpj: str, cnes: int):
+    return db.query(Empresa).filter(Empresa.cnpj == cnpj, Empresa.cnes == cnes).first()
+
 def read_all(db: Session, skip: int = 0, limit: int = 100):
     return db.query(Empresa).offset(skip).limit(limit).all()
 
@@ -15,8 +18,8 @@ def create(db: Session, empresa: EmpresaBase):
     db.refresh(db_empresa)
     return db_empresa
 
-def update(db: Session, empresa: EmpresaBase):
-    db_empresa = db.query(Empresa).filter(Empresa.id == empresa).first()
+def update(db: Session, id: int, empresa: EmpresaBase):
+    db_empresa = db.query(Empresa).filter(Empresa.id == id).first()
     if db_empresa is None:
         return None
     for key, value in empresa.model_dump(exclude_unset=True).items():
