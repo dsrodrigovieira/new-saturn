@@ -1,4 +1,4 @@
-from sqlalchemy     import Column, Integer, String, Boolean, DateTime, ForeignKey
+from sqlalchemy     import Column, Integer, String, Boolean, DateTime, ForeignKey, ForeignKeyConstraint
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 from app.database   import Base
@@ -18,3 +18,12 @@ class Usuario(Base):
     ultimo_login = Column(DateTime(timezone=True), nullable=True)
 
     empresa = relationship("Empresa", back_populates="usuarios")
+
+    __table_args__ = (
+        ForeignKeyConstraint(
+            ['empresa_id'],
+            ['empresas.id'],
+            name='fk_usuario_empresa_id',
+            ondelete='RESTRICT'
+        ),
+    )
