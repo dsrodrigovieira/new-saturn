@@ -17,6 +17,9 @@ class UsuarioBase(BaseModel):
         from_attributes = True
         orm_mode = True    
 
+class Usuario(UsuarioBase):
+    id: int
+
 Usuarios = List[UsuarioBase]
 
 class UsuarioConfirmaAlteracao(BaseModel):
