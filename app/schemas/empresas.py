@@ -7,7 +7,8 @@ class EmpresaBase(BaseModel):
     cnes: int
     razao: str
     fantasia: str
-    endereco: str
+    cep: str
+    numero_endereco: str | None = None
     site: str
     telefone: str
     email: str
@@ -18,6 +19,9 @@ class EmpresaBase(BaseModel):
     class Config:
         from_attributes = True
         orm_mode = True
+
+class Empresa(EmpresaBase):
+    id: int
 
 Empresas = List[EmpresaBase]
 
