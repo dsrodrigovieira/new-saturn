@@ -6,12 +6,12 @@ def test_create_kpi(client):
     response = client.post("/kpis", json=kpi.model_dump())
     assert response.status_code == 201
 
-def test_create_empresa_with_existing_title(client, db_session):
+def test_create_kpi_with_existing_title(client, db_session):
     kpi = create_fake_kpi()
-    # Adiciona empresa original ao banco
+    # Adiciona kpi original ao banco
     db_session.add(Kpi(**kpi.model_dump()))
     db_session.commit()
-    # Tenta cadastrar outra empresa com mesmo cnpj e cnes
+    # Tenta cadastrar outro kpi com mesmo título
     duplicate_kpi = kpi.model_copy()
     response = client.post("/kpis", json=duplicate_kpi.model_dump())
     assert response.status_code == 409
