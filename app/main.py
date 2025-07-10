@@ -1,5 +1,5 @@
 from fastapi     import FastAPI
-from app.routers import usuarios, empresas, kpis
+from app.routers import usuarios, empresas, kpis, metricas
 from .database   import engine, Base
 
 Base.metadata.create_all(bind=engine)
@@ -10,6 +10,7 @@ app = FastAPI(title="Saturn Analytics API",
 app.include_router(usuarios.usuarios_router, prefix="/usuarios", tags=["Usuarios"])
 app.include_router(empresas.empresas_router, prefix="/empresas", tags=["Empresas"])
 app.include_router(kpis.kpis_router, prefix="/kpis", tags=["Kpis"])
+app.include_router(metricas.metricas_router, prefix="/metricas", tags=["Métricas"])
 
 @app.get("/",include_in_schema=False)
 def read_root():
